@@ -8,13 +8,15 @@ int a[N];
 int q;
 int block_size;
 int range_ans;
-
+int ans[N];
 struct Query {
   int l, r;
+  int id;
   int ans;
   Query() {}
-  Query(int _l, int _r) {
+  Query(int _i, int _l, int _r) {
     l = _l, r = _r;
+    id = _i;
   }
   bool operator<(Query &other) const {
     int curr_block = l / block_size;
@@ -56,7 +58,7 @@ int main() {
     int l, r;
     cin >> l >> r;
     l--, r--;
-    query[i] = Query(l, r);
+    query[i] = Query(i, l, r);
   }
 
   sort(query, query + q);
@@ -87,8 +89,11 @@ int main() {
   }
 
   for (int i = 0; i < q; i++) {
-    cout << query[i].ans << "\n";
+    ans[query[i].id] = query[i].ans;
   }
 
+  for (int i = 0; i < q; i++) {
+    cout << ans[i] << "\n";
+  }
   return 0;
 }
